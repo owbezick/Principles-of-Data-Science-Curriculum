@@ -1,0 +1,30 @@
+---
+title: "Project Statement"
+author: "Owen Bezick, Rachel Hendricks, Drew Dible, Dayton Simenz"
+date: "9/13/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Standardized Data Science Curriculum 
+
+A few sentences about the project.
+
+* Why it is important
+* How it will impact students in or not in classes
+
+## Project Goals
+ 
+What does success look like for this project?
+
+* Syllabus
+* Package
+* 'Tiered' modules
+
+How are students 'graded' within the modules?
+
+* Problem sets
+* Certificates 
