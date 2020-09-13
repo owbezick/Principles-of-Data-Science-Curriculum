@@ -28,3 +28,8 @@ How are students 'graded' within the modules?
 
 * Problem sets
 * Certificates 
+
+## Timeline
+
+* First week: Syllabus
+* Second week: first seection of module
