@@ -1,7 +1,7 @@
 ---
-title: "Project Statement"
+title: "Standardized Data Science Curriculum "
 author: "Owen Bezick, Rachel Hendricks, Drew Dible, Dayton Simenz"
-date: "9/13/2020"
+date: "9/17/2020"
 output: html_document
 ---
 
@@ -9,27 +9,30 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Standardized Data Science Curriculum 
+## Project Introduction
 
-A few sentences about the project.
-
-* Why it is important
-* How it will impact students in or not in classes
+* This project is to build an open-sourced system of tiered modules to standardize the curriculum for the data science minor at Davidson College. The statistics and coding sections of various classes within the minor often contain many areas of overlap, which creates a lack of development for students that already have experience in the minor. 
+  
+* With a tiered curriculum, different students will be able to learn from a beginner’s perspective, or refresh on old principles and develop new techniques, all at the same time. Additionally, the modules will allow students not in the data science minor to explore the principles of data science, if they desire.
 
 ## Project Goals
- 
-What does success look like for this project?
 
-* Syllabus
-* Package
-* 'Tiered' modules
+### Principles of pedagogy & Open Source learning
+* Designing an effective syllabus
+* Review past coursework in the data science minor
+* Effectively assess if students are retaining information based on suggestions from pedagogical research
 
-How are students 'graded' within the modules?
+### Design and implement modules
+* Introduction to R, RStudio IDE, Git & Github. Best practices in R.
+* Fundamentals of data wrangling, cleaning, and presentation using tables and simple graphics
+* Basic statistics, including summary stats & linear and logistic regression
+* Project to wrap everything together
+* Additional presentation using RMarkdown & Shiny
 
-* Problem sets
-* Certificates 
+### Receive feedback from students and faculty
+* Serve as a group of “TA’s” for current class
+* What is traditionally difficult 
 
-## Timeline
-
-* First week: Syllabus
-* Second week: first seection of module
+### Appropriately package modules distribution
+* Create an R package to house dependencies including other R packages and data
+* Publish modules in RPubs using RMarkdown
