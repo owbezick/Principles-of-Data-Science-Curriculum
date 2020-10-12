@@ -16,7 +16,7 @@ With a modularized curriculum, different students will be able to learn from a b
 * Activity 2: Graph Networks
 * Activity 3: Publishing Work
 ## Usage
-This repository is intended to be used as a curriculum. Each module has an associated Wiki page, activity, and directory in the repository.
+Rachel: This repository is intended to be used as a curriculum. Each module has an associated Wiki page, activity, and directory in the repository.
 ## Contributing
 ## Credits
 ## License
