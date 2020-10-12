@@ -4,7 +4,7 @@ This project is to build an open-sourced system of  modules to standardize the c
 With a modularized curriculum, different students will be able to learn from a beginner’s perspective, or refresh on old principles and develop new techniques, all at the same time. Additionally, the modules will allow students not in the data science minor to explore the principles of data science, if they desire.
 
 ## Table of Contents 
-#### Prerequisites:
+#### Prerequisites
 * 0: Getting the Fundamentals
 * 1: Getting Inspired
 #### Modules
