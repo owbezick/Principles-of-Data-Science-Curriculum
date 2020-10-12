@@ -4,9 +4,10 @@ This project is to build an open-sourced system of  modules to standardize the c
 With a modularized curriculum, different students will be able to learn from a beginner’s perspective, or refresh on old principles and develop new techniques, all at the same time. Additionally, the modules will allow students not in the data science minor to explore the principles of data science, if they desire.
 
 ## Table of Contents 
+#### Prerequisites:
+* 0: Getting the Fundamentals
+* 1: Getting Inspired
 #### Modules
-* Prerequisite 0: Getting the Fundamentals
-* Prerequisite 1: Getting Inspired
 * Module 1: Getting Started
 * Module 2: Getting Data and Visuals
 * Module 3: Getting in Production
@@ -16,7 +17,10 @@ With a modularized curriculum, different students will be able to learn from a b
 * Activity 2: Graph Networks
 * Activity 3: Publishing Work
 ## Usage
-Rachel: This repository is intended to be used as a curriculum. Each module has an associated Wiki page, activity, and directory in the repository.
+Rachel: 
 ## Contributing
+Owen:
 ## Credits
+Owen:
 ## License
+Owen:
