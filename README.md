@@ -4,18 +4,12 @@ The goal of this project is to build an open-sourced system of  modules to stand
 With a modularized curriculum, different students will be able to learn from a beginner’s perspective, or refresh on old principles and develop new techniques, all at the same time. Additionally, the modules will allow students not in the data science minor to explore the principles of data science, if they desire.
 
 ## Table of Contents 
-#### Prerequisites
-* 0: Getting the Fundamentals
-* 1: Getting Inspired
-#### Modules
-* Module 1: Getting Started
-* Module 2: Getting Data and Visuals
-* Module 3: Getting in Production
-#### Activities
-* Activity 0: Exploration
-* Activity 1: Geo-Spatial Data
-* Activity 2: Graph Networks
-* Activity 3: Publishing Work
+### Modules
+0. Inspiration
+1. The Fundamentals
+2. Data Wrangling and Visualization
+3. Publishing Work
+### Resources
 ## Usage
 Rachel: 
 ## Contributing
