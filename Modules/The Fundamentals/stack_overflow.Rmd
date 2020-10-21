@@ -1,0 +1,17 @@
+---
+title: "Additional Help and Stack Overflow Resources"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+This page supplements the information found in *Hands-On Programming with R* Section 3.2. 
+
+#### Extra Help Information
+**When you run into an error, it can be helpful to copy and paste the error message into a search engine to find out how other users have solved the problem you are experiencing.** Additionally, if you need to access help for a function in a package that’s not currently loaded, specify the name of the package. For example, to obtain documentation for the mutate() function in the dplyr package, run the following command: help(mutate, package="dplyr"). Lastly, run the example() command in order to run examples for a given function. This command provides a more hands-on approach to learning a new function. Looking for more help documentation outside of your reading in *Hands-On Programming with R* and this information? Check out the following link: https://www.r-project.org/help.html
+
+#### Stack Overflow:
+You can use [r] to search the site within the tag of r. If you need to ask a question on stack overflow, you’ll need to create what’s called a “reproducible example.” The keys here are: provide data, provide minimal code, and only include runnable code. Read more here: https://stackoverflow.com/questions/5963269/how-to-make-a-great-r-reproducible-example 
+
+
