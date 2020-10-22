@@ -5,9 +5,13 @@ With a modularized curriculum, different students will be able to learn from a b
 
 ## Table of Contents 
 Inspiration
+
 The Fundamentals
+
 Data Wrangling and Visualization
+
 Publishing Work
+
 ### Resources
 ## Usage
 Rachel:  teach yourself in the wiki and then do activities (Starter code provided)
