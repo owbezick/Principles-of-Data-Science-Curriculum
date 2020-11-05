@@ -17,6 +17,7 @@ Therefore, this course supports flexibility in choosing and ordering topics. Stu
 [Publishing Work](https://github.com/owbezick/Standardized-Data-Science-Curriculum/wiki/Publishing-Work)
 
 ### Extra Resources
+[Resource Sheet](https://github.com/owbezick/Standardized-Data-Science-Curriculum/wiki/Resources)
 
 ## Usage
 To properly use this repository, click on one of the above links under the course content section to be taken to the Github Wiki. In the wiki page, there will be links to outside resources that teach you the goals of the wiki page. Complete the exercises and then compare to the asnwer key before moving onto the activity for the section which will be linked, too. **see video**
@@ -24,6 +25,11 @@ To properly use this repository, click on one of the above links under the cours
 ## Contributing
 Owen:
 ## Credits
-Owen:
+Authors:
+* Dayton Simenz
+* Drew Dibble
+* Owen Bezick
+* Rachel Hendricks
+ 
 ## License
-Owen:
+MIT License
