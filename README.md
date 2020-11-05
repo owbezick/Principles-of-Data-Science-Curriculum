@@ -10,11 +10,11 @@ Therefore, this course supports flexibility in choosing and ordering topics. Stu
 ### Course Content
 [Inspiration](https://github.com/owbezick/Standardized-Data-Science-Curriculum/wiki/Module-0:-Inspiration)
 
-The Fundamentals
+[The Fundamentals](https://github.com/owbezick/Standardized-Data-Science-Curriculum/wiki/The-Fundamentals)
 
-Data Wrangling and Visualization
+[Data Wrangling and Visualization](https://github.com/owbezick/Standardized-Data-Science-Curriculum/wiki/Module-2:-Data-Wrangling-and-Visualization)
 
-Publishing Work
+[Publishing Work](https://github.com/owbezick/Standardized-Data-Science-Curriculum/wiki/Publishing-Work)
 
 ### Extra Resources
 
