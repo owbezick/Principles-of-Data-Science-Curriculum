@@ -1,4 +1,5 @@
 # Principles of Data-Science Curriculum
+![Davidson Logo](https://offices.davidson.edu/communications/marketing-toolbox/logos/black-ltr-red-bar-white-di/black-letters-red-bar-white-diamond_cmyk.png)
 ## Description
 The goal of this repository is to build an open-sourced curriculum for learning the principles of data science in the R programming language. A use case for this repository would be the data science minor at Davidson College. The coding sections of various classes within the minor often contain areas of overlap, which creates a lack of development for students that already have experience in the minor, so a repository such as this one would allow students to develop at their own pace.  
 
@@ -20,10 +21,11 @@ Therefore, this course supports flexibility in choosing and ordering topics. Stu
 [Resource Sheet](https://github.com/owbezick/Standardized-Data-Science-Curriculum/wiki/Resources)
 
 ## Usage
-To properly use this repository, click on one of the above links under the course content section to be taken to the Github Wiki. In the wiki page, there will be links to outside resources that teach you the goals of the wiki page. Complete the exercises and then compare to the asnwer key before moving onto the activity for the section which will be linked, too. **see video**
+To properly use this repository, click on one of the above links under the course content section to be taken to the Github Wiki. In the wiki page, there will be links to outside resources that teach you the goals of the wiki page. Complete the exercises and then compare to the asnwer key before moving onto the activity for the section which will be linked, too. 
 
 ## Contributing
-Owen:
+If one would like to contribute to adding resources to this repository, please add your changes and submit a pull request!
+
 ## Credits
 Authors:
 * Dayton Simenz
