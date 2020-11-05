@@ -32,6 +32,8 @@ Authors:
 * Drew Dibble
 * Owen Bezick
 * Rachel Hendricks
- 
+
+Advisor:
+ * Dr. Marsicano
 ## License
 MIT License
