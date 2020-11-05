@@ -8,7 +8,7 @@ Therefore, this course supports flexibility in choosing and ordering topics. Stu
 
 ## Table of Contents 
 ### Course Content
-Inspiration
+[Inspiration](https://github.com/owbezick/Standardized-Data-Science-Curriculum/wiki/Module-0:-Inspiration)
 
 The Fundamentals
 
