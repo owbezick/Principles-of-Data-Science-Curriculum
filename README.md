@@ -11,7 +11,9 @@ Therefore, this course supports flexibility in choosing and ordering topics. Stu
 ### Course Content
 [Inspiration](https://github.com/owbezick/Principles-of-Data-Science-Curriculum/wiki/Inspiration)
 
-[The Fundamentals](https://github.com/owbezick/Principles-of-Data-Science-Curriculum/wiki/The-Fundamentals)
+[The Fundamentals](https://github.com/owbezick/Principles-of-Data-Science-Curriculum/wiki/The-Fundamentals-I)
+
+[The Fundamentals II](https://github.com/owbezick/Principles-of-Data-Science-Curriculum/wiki/The-Fundamentals-II)
 
 [Data Wrangling and Visualization](https://github.com/owbezick/Principles-of-Data-Science-Curriculum/wiki/Data-Wrangling-and-Visualization)
 
