@@ -1,0 +1,184 @@
+---
+title: "map_activity_draft2"
+author: "Rachel Hendricks"
+date: "11/11/2020"
+output:
+  html_document:
+    df_print: paged
+---
+##$\color{RoyalBlue}{\text{Establish library and working directory}}$
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(foreign)      #Default package for almost all code, lets your read files into R
+library(ggplot2)      #plotting package
+library(colorspace)   #better colors for ggplot
+library(broom)        #a widely used, but relatively new, package for producing tidier data and tidier output; part of tidyverse
+library(tidyverse)    #a widely used, but relatively new, package for producing tidier data and tidier output
+library(plotly)     #new package
+
+library(tmap)
+library(maps)
+library(sf)
+
+options(tigris_use_cache = TRUE)
+census_api_key("299665d01d1e778d426d5c6889f1a54e0a609d32")
+
+setwd("~/Desktop")
+```
+#Not sure if you have a good way to explain this stuff above
+
+##$\color{RoyalBlue}{\text{Load county dataset:}}$
+
+First, ensure that this .Rmd file is saved in the same folder as the data file: map_activity_draft2_data.csv.
+Second, load the data set into the R workspace. After launching RStudio, enter the following command, either by 
+  1. placing your cursor on the line in the chunk and hit (PC) Ctrl+Enter OR (Mac) Cmd+Enter OR
+  2. clicking the rightward facing little green arrow.
+```{r}
+census_data <- read.csv("map_activity_draft2_data.csv")
+```
+This dataset contains information on county (by state) population estimates, median income, unemployment, and political shifts to the right of the spectrum. 
+Variables descriptions are as follows:
+
+county_fips: Five digit Federal Information Processing Standards code that uniquely identifies counties and county equivalents in the United States
+
+state_abbv: State postal abbreviation
+
+county_name: County name, may be identical to county variable
+
+county: County name
+
+state: State full name
+
+rshift: Percentage difference between the Republican presidential vote in that county in 2016 and 2012. For example, 46.7955% of Kent County in Delaware (FIPS 20001) voted for Romney in 2012. In 2016, 49.81482% of that county voted for Trump. Therefore, the county shifted towards the Republican presidential candidate by 3.01325%. Positive value mean leaning more Republican; negative values mean leaning less Republican. 
+
+popEstimate16: Population in the county in 2016 
+
+unemployment: Unemployment rate in 2016
+
+medianIncome16: Median household income in the county in 2016.
+
+prcntGOP16: Percent of the county that voted for the Republican presidential candidate, Donald Trump, in 2016.
+
+Publications and research reports that use this data must cite it appropriately by including the following information:
+
+  Ella Foster-Molina and Ben Warren. Partisan Voting, County Demographics, and Deaths of Despair 
+  Data. February 2019.
+
+## \textcolor{RoyalBlue}{Create an object thememap that will help make the maps pretty}
+```{r, echo=FALSE}
+theme_map <- function(base_size=9, base_family="") {
+  require(grid)
+  theme_bw(base_size=base_size, base_family=base_family) %+replace%
+    theme(axis.line=element_blank(),
+          axis.text=element_blank(),
+          axis.ticks=element_blank(),
+          axis.title=element_blank(),
+          panel.background=element_blank(),
+          panel.border=element_blank(),
+          panel.grid=element_blank(),
+          panel.spacing=unit(0, "lines"),
+          plot.background=element_blank(),
+          legend.justification = c(0,0),
+          legend.position = c(0,0)
+    )
+}
+```
+
+
+##$\color{RoyalBlue}{\text{Create a histogram to understand the data spread:}}$
+```{r}
+hist(census_data$popEstimate16)
+
+census_data$log_popEstimate16 <- log(census_data$popEstimate16)
+
+hist(census_data$log_popEstimate16)
+```
+
+##$\color{RoyalBlue}{\text{Now let's apply the data in the histogram to a map that is more visually appealing:}}$
+```{r}
+plotPurple <- ggplot(data = census_data,
+                     aes(x = long, y = lat, group = group, fill = prcntGOP16))
+plotPurple <- plotPurple + geom_polygon(color = "gray90", size = 0.05) + coord_map(projection = "albers", lat0 = 39, lat1 = 45)
+plotPurple <- plotPurple + scale_fill_gradient2(low = "blue", mid = scales::muted("purple"), 
+                                                high = "red", midpoint = 50)+ labs(title = "Presidential Vote 2016")
+plotPurple + theme_map() + labs(fill = "Percent Trump")
+```
+
+##$\color{RoyalBlue}{\text{Using Variables in the Dataset to Explore Trends in 3D plots:}}$
+```{r}
+plotUnemploymentMedIncomeWRaceRShift <-plot_ly(census_data, x = ~whiteNotLatino, y = ~unemployment,
+                           z = ~medianIncome16,
+        color = ~rShift, colors = c('blue','purple', 'red'), 
+        size = ~popEstimate16) %>%
+  add_markers() %>% 
+  colorbar(title = "Shift to Trump") %>%
+  layout(title = "Counties in US. Size of dot indicates county population.",
+         scene = list(xaxis = list(title = '% white'),
+                      yaxis = list(title = 'Unemployment'),
+                      zaxis = list(title = 'Median Income in 2016')))
+plotUnemploymentIncomeRaceRShift
+```
+
+```{r}
+plotWhiteEduRShiftDrugChg <-plot_ly(census_data, x = ~domesticMig16, y = ~unemployment,
+                           z = ~medianIncome16,
+                           color = ~rShift, 
+                           colors = c('blue','grey', 'red'), 
+                           size = ~popEstimate16) %>%
+  add_markers() %>% 
+  colorbar(title = "Percent Change in Votes for GOP Candidate") %>%
+  layout(title = "Counties in US.",
+         scene = list(xaxis = list(title = 'Net domestic migration in 2016'),
+                      yaxis = list(title = '% Unemployed'),
+                      zaxis = list(title = '2016 Median Income')))
+plotWhiteEduRShiftDrugChg
+```
+
+##$\color{RoyalBlue}{\text{Using TidyCensus population data to explore North Carolina}}$
+```{r}
+nc_pop <- 
+  get_acs(geography = "county",
+          variables = "B01003_001",
+          state = "NC",
+          geometry = TRUE)
+mapview(nc_pop, zcol = "estimate")
+```
+#There seems to be an issue on my end with ACS data (the same question I asked on the call Wednesday, I can't resolve it). But I think it would be nice to work with ACS data to show that the tidycensus package has cool population data even though I made a dataset for the above exercises. It would also be cool to add another layer to this analysis if you have any ideas.
+
+##$\color{RoyalBlue}{\text{Using ACS data to explore Orange County in California}}$
+```{r}
+library(tidycensus)
+library(tidyverse)
+options(tigris_use_cache = TRUE)
+
+orange <- get_acs(state = "CA", county = "Orange", geography = "tract",
+                  variables = "B19013_001", geometry = TRUE)
+
+head(orange)
+```
+
+##$\color{RoyalBlue}{\text{Using Orange County data in leaflet}}$
+```{r}
+orange %>%
+  ggplot(aes(fill = estimate)) +
+  geom_sf(color = NA) +
+  coord_sf(crs = 26911) +
+  scale_fill_viridis_c(option = "magma")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
