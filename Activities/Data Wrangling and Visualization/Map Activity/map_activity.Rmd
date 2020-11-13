@@ -1,0 +1,117 @@
+---
+title: "Map Activity"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+### Libraries Used
+```{r, message = FALSE, warning = FALSE}
+library(colorspace)  
+library(broom)        
+library(tidyverse)    
+library(tmap)
+library(maps)
+library(sf)
+library(plotly)
+```
+
+### The Data
+First, we will read in a pre-downloaded set of data from the Census API.
+```{r, message = FALSE}
+census_data <- read_csv("census_data.csv")
+```
+
+Then, let's view the first 10 rows:
+```{r}
+head(census_data, n = 10)
+```
+
+This dataset contains information on county (by state) population estimates, median income, unemployment, and political shifts to the right of the spectrum.
+
+Publications and research reports that use this data must cite it appropriately by including the following information:
+
+  * Ella Foster-Molina and Ben Warren. Partisan Voting, County Demographics, and Deaths of Despair Data. February 2019.
+  
+The codebook for the dataset is:
+
+* county_fips: Five digit Federal Information Processing Standards code that uniquely identifies counties and county equivalents in the United States
+
+* state_abbv: State postal abbreviation
+
+* county_name: County name, may be identical to county variable
+
+* county: County name
+
+* state: State full name
+
+* rshift: Percentage difference between the Republican presidential vote in that county in 2016 and 2012. For example, 46.7955% of Kent County in Delaware (FIPS 20001) voted for Romney in 2012. In 2016, 49.81482% of that county voted for Trump. Therefore, the county shifted towards the Republican presidential candidate by 3.01325%. Positive value mean leaning more Republican; negative values mean leaning less Republican. 
+
+* popEstimate16: Population in the county in 2016 
+
+* unemployment: Unemployment rate in 2016
+
+* medianIncome16: Median household income in the county in 2016.
+
+* prcntGOP16: Percent of the county that voted for the Republican presidential candidate, Donald Trump, in 2016.
+
+### Graphics
+
+#### Histogram
+
+It is quite simple to make a simple histogram using the hist() function.
+
+```{r}
+hist(census_data$popEstimate16)
+```
+
+However, it might be helpful to change the scale of the variable. We can do that using the log() function.
+```{r}
+hist(log(census_data$popEstimate16))
+```
+
+#### Choropleth Map
+
+Using ggplot2, we can create an aesthetically pleasing and information filled map.
+
+```{r}
+ggplot(
+  data = census_data
+  , aes(x = long, y = lat, group = group, fill = prcntGOP16)
+) +
+  geom_polygon(
+    color = "gray90"
+    , size = 0.05
+  ) + 
+  coord_map(
+    projection = "albers"
+    , lat0 = 39
+    , lat1 = 45
+  ) +
+  scale_fill_gradient2(
+    low = "blue"
+    , mid = scales::muted("purple")
+    , high = "red"
+    , midpoint = 50
+  ) + labs(
+    title = "Presidential Vote 2016"
+    , fill = "Percent Vote for Trump"
+  ) 
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
