@@ -14,7 +14,6 @@ library(tidyverse)
 library(tmap)
 library(maps)
 library(sf)
-library(plotly)
 ```
 
 ### The Data
@@ -57,6 +56,7 @@ The codebook for the dataset is:
 * prcntGOP16: Percent of the county that voted for the Republican presidential candidate, Donald Trump, in 2016.
 
 ### Graphics
+Once we have the data set imported to R, we can begin to visualize some of the data.
 
 #### Histogram
 
@@ -66,7 +66,7 @@ It is quite simple to make a simple histogram using the hist() function.
 hist(census_data$popEstimate16)
 ```
 
-However, it might be helpful to change the scale of the variable. We can do that using the log() function.
+However, it might be helpful to change the scale of the variable. We can do that with an easy call to the log() function.
 ```{r}
 hist(log(census_data$popEstimate16))
 ```
@@ -78,7 +78,12 @@ Using ggplot2, we can create an aesthetically pleasing and information filled ma
 ```{r}
 ggplot(
   data = census_data
-  , aes(x = long, y = lat, group = group, fill = prcntGOP16)
+  , aes(
+    x = long
+    , y = lat
+    , group = group
+    , fill = prcntGOP16
+  )
 ) +
   geom_polygon(
     color = "gray90"
@@ -101,7 +106,11 @@ ggplot(
 ```
 
 
-
+## Independent Activities
+1. Use the provided data set (which can be downloaded from github) and create some graphics of your own! 
+- Use a histogram, scatter plot, and bar chart to explore different variables in the data set. Once you have found a variable that you are interested in, create a map of the entire US as well as a map of a particular state using it.
+2. Review the tidyCensus package documentation to pull data of your own. 
+- Explore the possible variables (there are many!) and think of a question that you can answer using data visualization. Once you have a question to try to answer, pull the variables of interest. Remember, you may have to change the scale of some variables or mutate them in another way. Once your data is ready for graphing, have at it! Try out different graphs and see which ones lead you to an insightful conclusion.
 
 
 
