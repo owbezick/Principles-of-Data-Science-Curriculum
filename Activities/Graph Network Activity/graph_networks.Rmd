@@ -15,6 +15,8 @@ library(knitr)
 ### The Data
 We have provided an .RDS file with a list outlining various cases of
 dialogue by listing the speaker and the recipient of the speech.
+
+hi
 ```{r, message = FALSE}
 friends_edgelist <- readRDS("edgelist.RDS") 
 ```
