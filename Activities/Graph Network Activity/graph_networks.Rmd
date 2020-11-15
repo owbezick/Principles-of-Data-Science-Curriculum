@@ -13,10 +13,14 @@ library(knitr)
 ```
 
 ### The Data
-We have provided an .RDS file with a list outlining various cases of
-dialogue by listing the speaker and the recipient of the speech.
+We have provided both a custom data set and an .RDS file with a list 
+outlining various cases of dialogue from the tv show 'Friends', outlining instances of speech, the speaker, and the recipient of the speech. 
+```{r, message=FALSE}
+node_list <- tibble(id = 0:5)
+edge_list <- tibble(root = c(0, 0, 0, 1, 1, 2, 2, 2, 3, 3, 4, 4, 5, 5, 5),
+                    dest = c(1, 2, 4, 2, 5, 0, 1, 5, 2, 4, 2, 3, 1, 2, 4))
+```
 
-hi
 ```{r, message = FALSE}
 friends_edgelist <- readRDS("edgelist.RDS") 
 ```
