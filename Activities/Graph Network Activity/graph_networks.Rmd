@@ -1,0 +1,30 @@
+---
+title: "Graph Networks Activity"
+pdf_document: default
+---
+
+### Libraries Used
+```{r, message = FALSE, warning = FALSE}
+library(igraph)
+library(tidyverse)
+library(threejs)
+library(readr)
+library(knitr)
+```
+
+### The Data
+We have provided an .RDS file with a list outlining various cases of
+dialogue by listing the speaker and the recipient of the speech.
+```{r, message = FALSE}
+friends_edgelist <- readRDS("edgelist.RDS") 
+```
+
+Then, let's view the first 10 rows:
+```{r}
+kable(friends_edgelist %>% head(10))
+```
+
+There are two main characteristics of a graph netowrk: the nodes, which are
+the individual items that form the netowrk, and the edges, which signify the
+connections between nodes.
+
