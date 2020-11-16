@@ -25,12 +25,102 @@ edge_list <- tibble(root = c(0, 0, 0, 1, 1, 2, 2, 2, 3, 3, 4, 4, 5, 5, 5),
 friends_edgelist <- readRDS("edgelist.RDS") 
 ```
 
-Then, let's view the first 10 rows:
+Then, let's view the first 10 rows of each data set:
 ```{r}
 kable(friends_edgelist %>% head(10))
+
+kable(edge_list %>% head(10))
 ```
+
+Since the Friends network is quite a bit larger than our custom data set, 
+we'll use the filter command to filter out any occurances that don't involve
+the show's main characters.
+```{r, message = FALSE}
+friends <- c("Phoebe", "Monica", "Rachel", "Joey", "Ross", "Chandler") 
+edgelist_without <- friends_edgelist %>% 
+  dplyr::filter(!(from %in% friends & to %in% friends))
+```
+
+Lastly, to interact with the data most efficiently, we'll format each dataset
+as a graph network; notice, each employs a different method of doing so but
+arrives at the same result.
+
+Custom data:
+```{r, message = FALSE}
+graph <- graph.data.frame(edge_list, directed = TRUE)
+```
+Friends data:
+```{r, message = FALSE}
+edgelist_matrix <- as.matrix(edgelist_without[ ,c("from", "to")]) 
+friends_graph <- igraph::graph_from_edgelist(edgelist_matrix, directed = FALSE) %>% 
+  igraph::set.edge.attribute("weight", value = edgelist_without$weight)
+```
+
+### Elements of a Graph Network
 
 There are two main characteristics of a graph netowrk: the nodes, which are
 the individual items that form the netowrk, and the edges, which signify the
-connections between nodes.
+connections between nodes. You can use basic commands to see the number of 
+edges and vertices involved in any graph network as well as other 
+characteristics such as the diameter, which is the largest number of 
+connections between any two nodes.
+
+Analysis of the custom data:
+```{r, message = FALSE}
+E(graph) # Indicates 15 edges
+V(graph) # Indicates 6 nodes
+get_diameter(graph) # Indicates a diameter of four
+
+```
+Analysis of the Friends data:
+```{r, message=FALSE}
+E(friends_graph) # Indicates 2961 edges signifying different instances of speech
+V(friends_graph) # Indicates 650 nodes, signifying 650 different speakers
+get_diameter(friends_graph) # Indicates that the greatest distance between 
+#                             any characters is five degrees of separation
+```
+In addition to checking these basic network characteristics, certain commands 
+tell you data about specific points. For example, the degree command tells you
+the number of nodes connected to a single node.
+
+For example, degree can be used to tell us that Joey interacted with 348 
+characters:
+```{r}
+degree(friends_graph, v = 'Joey')
+```
+
+
+### Visualizing the Network
+Now that the basic elements of a graph network are understood, it's time to
+visualize them. One way to do this is by making an ego graph, which centers 
+around a single node, the ego. 
+```{r}
+graph_ego <- make_ego_graph(graph, 3, '0', mode = c('all'))[[1]]
+fr_graph_ego <- make_ego_graph(friends_graph, 1, 'Joey', mode = c('all'))[[1]]
+plot(graph_ego)
+plot(fr_graph_ego)
+```
+
+As you can see, this still produces results that are not particularly helpful,
+especially for the monstrous Friends netowork. At the very least, we can add 
+some colors to the homemade data that indicate each node's proximity to the 
+ego, number zero (the Friends network will take a little more).
+```{r}
+colors <- c("red", "orange","dodgerblue", "cyan")
+dists <- distances(graph_ego, v = '0')
+V(graph_ego)$color <- colors[dists+1]
+plot(graph_ego, edge.arrow.size = .05)
+```
+
+For the Friends graph, we'll use the louvain_cluster command to organize the 
+network into distinct communities, 
+
+
+
+
+
+
+
+
+
 
