@@ -113,7 +113,34 @@ plot(graph_ego, edge.arrow.size = .05)
 ```
 
 For the Friends graph, we'll use the louvain_cluster command to organize the 
-network into distinct communities, 
+network into distinct communities, and assign those communities to the graph
+object to encourage additional organization. Then, we'll create subgraphs out
+of each community so they can be analyzed independently and sorted using dplyr
+commands for analyzing the nodes with the most betweenness, or involvement
+within the network. The resulting list will show each community's member count
+and its most central member.
+```{r, message=FALSE}
+communities <- data.frame() 
+for (i in unique(friends_graph$community)) { 
+  # create subgraphs for each community 
+  subgraph <- induced_subgraph(friends_graph, v = which(friends_graph$community == i)) 
+  # get size of each subgraph 
+  size <- igraph::gorder(subgraph) 
+  # get betweenness centrality 
+  btwn <- igraph::betweenness(subgraph) 
+  communities <- communities %>% 
+    dplyr::bind_rows(data.frame(
+      community = i, 
+      n_characters = size, 
+      most_important = names(which(btwn == max(btwn))) 
+    ) 
+    ) 
+} 
+knitr::kable(
+  communities %>% 
+    dplyr::select(community, n_characters, most_important))
+```
+
 
 
 
