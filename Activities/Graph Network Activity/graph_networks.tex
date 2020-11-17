@@ -1,0 +1,504 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Graph Networks Activity},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\usepackage{longtable,booktabs}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Graph Networks Activity}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{}
+    \preauthor{}\postauthor{}
+    \date{}
+    \predate{}\postdate{}
+  
+
+\begin{document}
+\maketitle
+
+\subsubsection{Libraries Used}\label{libraries-used}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(igraph)}
+\KeywordTok{library}\NormalTok{(tidyverse)}
+\KeywordTok{library}\NormalTok{(threejs)}
+\KeywordTok{library}\NormalTok{(readr)}
+\KeywordTok{library}\NormalTok{(knitr)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{The Data}\label{the-data}
+
+We have provided both a custom data set and an .RDS file with a list
+outlining various cases of dialogue from the tv show `Friends',
+outlining instances of speech, the speaker, and the recipient of the
+speech.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{node_list <-}\StringTok{ }\KeywordTok{tibble}\NormalTok{(}\DataTypeTok{id =} \DecValTok{0}\OperatorTok{:}\DecValTok{5}\NormalTok{)}
+\NormalTok{edge_list <-}\StringTok{ }\KeywordTok{tibble}\NormalTok{(}\DataTypeTok{Root =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{5}\NormalTok{),}
+                    \DataTypeTok{Destination =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{4}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{friends_edgelist <-}\StringTok{ }\KeywordTok{readRDS}\NormalTok{(}\StringTok{"edgelist.RDS"}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+Then, let's view the first 10 rows of each data set:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{kable}\NormalTok{(friends_edgelist }\OperatorTok{%>%}\StringTok{ }\KeywordTok{head}\NormalTok{(}\DecValTok{10}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}llr@{}}
+\toprule
+from & to & weight\tabularnewline
+\midrule
+\endhead
+a Casino Boss & a Tourist & 1\tabularnewline
+a Casino Boss & Chandler & 1\tabularnewline
+a Casino Boss & Joey & 1\tabularnewline
+a Casino Boss & Phoebe & 1\tabularnewline
+a Casino Boss & Rachel & 1\tabularnewline
+a Crew Member & Alex & 1\tabularnewline
+a Crew Member & Chandler & 1\tabularnewline
+a Crew Member & Joey & 1\tabularnewline
+a Crew Member & The Director & 1\tabularnewline
+a Disembodied Voice & Phoebe & 1\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{kable}\NormalTok{(edge_list }\OperatorTok{%>%}\StringTok{ }\KeywordTok{head}\NormalTok{(}\DecValTok{10}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}rr@{}}
+\toprule
+Root & Destination\tabularnewline
+\midrule
+\endhead
+0 & 1\tabularnewline
+0 & 2\tabularnewline
+0 & 4\tabularnewline
+1 & 2\tabularnewline
+1 & 5\tabularnewline
+2 & 0\tabularnewline
+2 & 1\tabularnewline
+2 & 5\tabularnewline
+3 & 2\tabularnewline
+3 & 4\tabularnewline
+\bottomrule
+\end{longtable}
+
+Since the Friends network is quite a bit larger than our custom data
+set, we'll use the filter command to filter out any occurances that
+don't involve the show's main characters.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{friends <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"Phoebe"}\NormalTok{, }\StringTok{"Monica"}\NormalTok{, }\StringTok{"Rachel"}\NormalTok{, }\StringTok{"Joey"}\NormalTok{, }\StringTok{"Ross"}\NormalTok{, }\StringTok{"Chandler"}\NormalTok{) }
+\NormalTok{edgelist_without <-}\StringTok{ }\NormalTok{friends_edgelist }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{filter}\NormalTok{(}\OperatorTok{!}\NormalTok{(from }\OperatorTok{%in%}\StringTok{ }\NormalTok{friends }\OperatorTok{&}\StringTok{ }\NormalTok{to }\OperatorTok{%in%}\StringTok{ }\NormalTok{friends))}
+\end{Highlighting}
+\end{Shaded}
+
+Lastly, to interact with the data most efficiently, we'll format each
+dataset as a graph network; notice, each employs a different method of
+doing so but arrives at the same result.
+
+Custom data:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{graph <-}\StringTok{ }\KeywordTok{graph.data.frame}\NormalTok{(edge_list, }\DataTypeTok{directed =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Friends data:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{edgelist_matrix <-}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(edgelist_without[ ,}\KeywordTok{c}\NormalTok{(}\StringTok{"from"}\NormalTok{, }\StringTok{"to"}\NormalTok{)]) }
+\NormalTok{friends_graph <-}\StringTok{ }\NormalTok{igraph}\OperatorTok{::}\KeywordTok{graph_from_edgelist}\NormalTok{(edgelist_matrix, }\DataTypeTok{directed =} \OtherTok{FALSE}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\NormalTok{igraph}\OperatorTok{::}\KeywordTok{set.edge.attribute}\NormalTok{(}\StringTok{"weight"}\NormalTok{, }\DataTypeTok{value =}\NormalTok{ edgelist_without}\OperatorTok{$}\NormalTok{weight)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{Elements of a Graph
+Network}\label{elements-of-a-graph-network}
+
+There are two main characteristics of a graph netowrk: the nodes, which
+are the individual items that form the netowrk, and the edges, which
+signify the connections between nodes. You can use basic commands to see
+the number of edges and vertices involved in any graph network as well
+as other characteristics such as the diameter, which is the largest
+number of connections between any two nodes.
+
+Analysis of the custom data:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{E}\NormalTok{(graph) }\CommentTok{# Indicates 15 edges}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## + 15/15 edges from 8f816d2 (vertex names):
+##  [1] 0->1 0->2 0->4 1->2 1->5 2->0 2->1 2->5 3->2 3->4 4->2 4->3 5->1 5->2
+## [15] 5->4
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{V}\NormalTok{(graph) }\CommentTok{# Indicates 6 nodes}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## + 6/6 vertices, named, from 8f816d2:
+## [1] 0 1 2 3 4 5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{get_diameter}\NormalTok{(graph) }\CommentTok{# Indicates a diameter of four}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## + 4/6 vertices, named, from 8f816d2:
+## [1] 1 5 4 3
+\end{verbatim}
+
+Analysis of the Friends data:
+
+In addition to checking these basic network characteristics, certain
+commands tell you data about specific points.
+
+For example, the degree command can be used to tell us that Joey
+interacted with 348 characters:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{degree}\NormalTok{(friends_graph, }\DataTypeTok{v =} \StringTok{'Joey'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Joey 
+##  348
+\end{verbatim}
+
+You can also use this data to create visualizations of characters'
+social patterns. For example, the histogram below shows the number of
+times that Chandler talked to each of his ``friends'', which, in this
+case, signifies anyone that he spoke to more than fifteen times.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{chandlers_friends <-}\StringTok{ }\KeywordTok{filter}\NormalTok{(friends_edgelist, from }\OperatorTok{==}\StringTok{ 'Chandler'}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{filter}\NormalTok{(weight }\OperatorTok{>}\StringTok{ }\DecValTok{15}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{arrange}\NormalTok{(}\KeywordTok{desc}\NormalTok{(weight))}
+
+\KeywordTok{ggplot}\NormalTok{(chandlers_friends, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ to, }\DataTypeTok{y =}\NormalTok{ weight )) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_bar}\NormalTok{(}\DataTypeTok{stat =} \StringTok{"identity"}\NormalTok{, }\DataTypeTok{fill =} \StringTok{"Blue"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"Chandler's Friends"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Friend"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Times Spoken to"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{scale_fill_brewer}\NormalTok{(}\DataTypeTok{palette =} \StringTok{"Blues"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{graph_networks_files/figure-latex/unnamed-chunk-11-1.pdf}
+
+\subsubsection{Visualizing the Network}\label{visualizing-the-network}
+
+Now that the basic elements of a graph network are understood, it's time
+to visualize them. One way to do this is by making an ego graph, which
+centers around a single node, the ego.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{graph_ego <-}\StringTok{ }\KeywordTok{make_ego_graph}\NormalTok{(graph, }\DecValTok{3}\NormalTok{, }\StringTok{'0'}\NormalTok{, }\DataTypeTok{mode =} \KeywordTok{c}\NormalTok{(}\StringTok{'all'}\NormalTok{))[[}\DecValTok{1}\NormalTok{]]}
+\NormalTok{fr_graph_ego <-}\StringTok{ }\KeywordTok{make_ego_graph}\NormalTok{(friends_graph, }\DecValTok{1}\NormalTok{, }\StringTok{'Joey'}\NormalTok{, }\DataTypeTok{mode =} \KeywordTok{c}\NormalTok{(}\StringTok{'all'}\NormalTok{))[[}\DecValTok{1}\NormalTok{]]}
+\KeywordTok{plot}\NormalTok{(graph_ego)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{graph_networks_files/figure-latex/unnamed-chunk-12-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(fr_graph_ego)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{graph_networks_files/figure-latex/unnamed-chunk-12-2.pdf}
+
+As you can see, this still produces results that are not particularly
+helpful, especially for the monstrous Friends netowork. At the very
+least, we can add some colors to the homemade data that indicate each
+node's proximity to the ego, number zero (the Friends network will take
+a little more).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{colors <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"red"}\NormalTok{, }\StringTok{"orange"}\NormalTok{,}\StringTok{"dodgerblue"}\NormalTok{, }\StringTok{"cyan"}\NormalTok{)}
+\NormalTok{dists <-}\StringTok{ }\KeywordTok{distances}\NormalTok{(graph_ego, }\DataTypeTok{v =} \StringTok{'0'}\NormalTok{)}
+\KeywordTok{V}\NormalTok{(graph_ego)}\OperatorTok{$}\NormalTok{color <-}\StringTok{ }\NormalTok{colors[dists}\OperatorTok{+}\DecValTok{1}\NormalTok{]}
+\KeywordTok{plot}\NormalTok{(graph_ego, }\DataTypeTok{edge.arrow.size =}\NormalTok{ .}\DecValTok{05}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{graph_networks_files/figure-latex/unnamed-chunk-13-1.pdf}
+
+For the Friends graph, we'll use the louvain\_cluster command to
+organize the network into distinct communities, and assign those
+communities to the graph object to encourage additional organization.
+Then, we'll create subgraphs out of each community so they can be
+analyzed independently and sorted using dplyr commands for analyzing the
+nodes with the most betweenness, or involvement within the network. The
+resulting list will show each community's member count and its most
+central member.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# run louvain with edge weights }
+\NormalTok{louvain_partition <-}\StringTok{ }\NormalTok{igraph}\OperatorTok{::}\KeywordTok{cluster_louvain}\NormalTok{(friends_graph, }\DataTypeTok{weights =} \KeywordTok{E}\NormalTok{(friends_graph)}\OperatorTok{$}\NormalTok{weight) }
+\CommentTok{# assign communities to graph }
+\NormalTok{friends_graph}\OperatorTok{$}\NormalTok{community <-}\StringTok{ }\NormalTok{louvain_partition}\OperatorTok{$}\NormalTok{membership }
+\CommentTok{# see how many communities there are }
+\KeywordTok{unique}\NormalTok{(friends_graph}\OperatorTok{$}\NormalTok{community) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4 6 1 7 3 8 5 2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{communities <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{() }
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \KeywordTok{unique}\NormalTok{(friends_graph}\OperatorTok{$}\NormalTok{community)) \{ }
+  \CommentTok{# create subgraphs for each community }
+\NormalTok{  subgraph <-}\StringTok{ }\KeywordTok{induced_subgraph}\NormalTok{(friends_graph, }\DataTypeTok{v =} \KeywordTok{which}\NormalTok{(friends_graph}\OperatorTok{$}\NormalTok{community }\OperatorTok{==}\StringTok{ }\NormalTok{i)) }
+  \CommentTok{# get size of each subgraph }
+\NormalTok{  size <-}\StringTok{ }\NormalTok{igraph}\OperatorTok{::}\KeywordTok{gorder}\NormalTok{(subgraph) }
+  \CommentTok{# get betweenness centrality }
+\NormalTok{  btwn <-}\StringTok{ }\NormalTok{igraph}\OperatorTok{::}\KeywordTok{betweenness}\NormalTok{(subgraph) }
+\NormalTok{  communities <-}\StringTok{ }\NormalTok{communities }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{bind_rows}\NormalTok{(}\KeywordTok{data.frame}\NormalTok{(}
+      \DataTypeTok{community =}\NormalTok{ i, }
+      \DataTypeTok{n_characters =}\NormalTok{ size, }
+      \DataTypeTok{most_important =} \KeywordTok{names}\NormalTok{(}\KeywordTok{which}\NormalTok{(btwn }\OperatorTok{==}\StringTok{ }\KeywordTok{max}\NormalTok{(btwn))) }
+\NormalTok{    ) }
+\NormalTok{    ) }
+\NormalTok{\} }
+\NormalTok{knitr}\OperatorTok{::}\KeywordTok{kable}\NormalTok{(}
+\NormalTok{  communities }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{select}\NormalTok{(community, n_characters, most_important))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}rrl@{}}
+\toprule
+community & n\_characters & most\_important\tabularnewline
+\midrule
+\endhead
+4 & 128 & Chandler\tabularnewline
+6 & 109 & Joey\tabularnewline
+1 & 105 & Phoebe\tabularnewline
+7 & 93 & Rachel\tabularnewline
+3 & 105 & Monica\tabularnewline
+8 & 94 & Ross\tabularnewline
+5 & 8 & Intercom\tabularnewline
+2 & 8 & Bandleader\tabularnewline
+2 & 8 & Dennis Phillips\tabularnewline
+\bottomrule
+\end{longtable}
+
+Since three of these groups are notably smaller and led by insignificant
+characters, we'll create subgraphs of each group and filter them out by
+group size to ensure that only the groups lead by main characters are
+included.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{top_five <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{() }
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \KeywordTok{unique}\NormalTok{(friends_graph}\OperatorTok{$}\NormalTok{community)) \{ }
+  \CommentTok{# create subgraphs for each community }
+\NormalTok{  subgraph <-}\StringTok{ }\KeywordTok{induced_subgraph}\NormalTok{(friends_graph, }\DataTypeTok{v =} \KeywordTok{which}\NormalTok{(friends_graph}\OperatorTok{$}\NormalTok{community }\OperatorTok{==}\StringTok{ }\NormalTok{i)) }
+  \CommentTok{# for larger communities }
+  \ControlFlowTok{if}\NormalTok{ (igraph}\OperatorTok{::}\KeywordTok{gorder}\NormalTok{(subgraph) }\OperatorTok{>}\StringTok{ }\DecValTok{20}\NormalTok{) \{ }
+    \CommentTok{# get degree }
+\NormalTok{    degree <-}\StringTok{ }\NormalTok{igraph}\OperatorTok{::}\KeywordTok{degree}\NormalTok{(subgraph) }
+\NormalTok{  \} }
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+FINALLY, it is time to visualize the network in a way that is visually
+pleasing and reasonably organized. After adding some colors to represent
+a node's community, scaling the nodes by degree, and adding colored
+edges to show the root of the edge (or speaker of the dialogue), it's
+time to plot the graphs. Layout one, the spherical layout, is more
+visually pleasing but layout two is clearly preferable as it clusters
+groups together and bases node placement on community involvement and
+betweenness.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Scaling by degree and coloring by community}
+\KeywordTok{V}\NormalTok{(friends_graph)}\OperatorTok{$}\NormalTok{size <-}\StringTok{ }\DecValTok{3} 
+\KeywordTok{V}\NormalTok{(friends_graph)}\OperatorTok{$}\NormalTok{frame.color <-}\StringTok{ "white"} 
+\KeywordTok{V}\NormalTok{(friends_graph)}\OperatorTok{$}\NormalTok{color <-}\StringTok{ }\NormalTok{friends_graph}\OperatorTok{$}\NormalTok{community }
+\KeywordTok{V}\NormalTok{(friends_graph)}\OperatorTok{$}\NormalTok{label <-}\StringTok{ }\KeywordTok{V}\NormalTok{(friends_graph)}\OperatorTok{$}\NormalTok{name }
+\KeywordTok{V}\NormalTok{(friends_graph)}\OperatorTok{$}\NormalTok{label.cex <-}\StringTok{ }\FloatTok{1.5} 
+\CommentTok{# Coloring by speaker}
+\NormalTok{edge.start <-}\StringTok{ }\KeywordTok{ends}\NormalTok{(friends_graph, }\DataTypeTok{es =} \KeywordTok{E}\NormalTok{(friends_graph), }\DataTypeTok{names =}\NormalTok{ F)[,}\DecValTok{1}\NormalTok{] }
+\KeywordTok{E}\NormalTok{(friends_graph)}\OperatorTok{$}\NormalTok{color <-}\StringTok{ }\KeywordTok{V}\NormalTok{(friends_graph)}\OperatorTok{$}\NormalTok{color[edge.start] }
+\KeywordTok{E}\NormalTok{(friends_graph)}\OperatorTok{$}\NormalTok{arrow.mode <-}\StringTok{ }\DecValTok{0} \CommentTok{# only label central characters }
+\NormalTok{v_labels <-}\StringTok{ }\KeywordTok{which}\NormalTok{(}\KeywordTok{V}\NormalTok{(friends_graph)}\OperatorTok{$}\NormalTok{name }\OperatorTok{%in%}\StringTok{ }\NormalTok{friends) }
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\KeywordTok{length}\NormalTok{(}\KeywordTok{V}\NormalTok{(friends_graph))) \{ }
+  \ControlFlowTok{if}\NormalTok{ (}\OperatorTok{!}\NormalTok{(i }\OperatorTok{%in%}\StringTok{ }\NormalTok{v_labels)) \{ }\KeywordTok{V}\NormalTok{(friends_graph)}\OperatorTok{$}\NormalTok{label[i] <-}\StringTok{ ""}\NormalTok{ \} }
+\NormalTok{\}}
+
+\NormalTok{l1 <-}\StringTok{ }\KeywordTok{layout_on_sphere}\NormalTok{(friends_graph)}
+\KeywordTok{plot}\NormalTok{(friends_graph, }\DataTypeTok{rescale =}\NormalTok{ T, }\DataTypeTok{layout =}\NormalTok{ l1, }\DataTypeTok{main =} \StringTok{"'Friends' Network - All Seasons"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{graph_networks_files/figure-latex/unnamed-chunk-16-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{l2 <-}\StringTok{ }\KeywordTok{layout_with_mds}\NormalTok{(friends_graph) }
+\KeywordTok{plot}\NormalTok{(friends_graph, }\DataTypeTok{rescale =}\NormalTok{ T, }\DataTypeTok{layout =}\NormalTok{ l2, }\DataTypeTok{main =} \StringTok{"'Friends' Network - All Seasons"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{graph_networks_files/figure-latex/unnamed-chunk-16-2.pdf}
+
+\subsubsection{Acknowledgements}\label{acknowledgements}
+
+Special thanks to Keith McNulty's article ``Community Detection in R
+Using Communitues of Friends Characters'' for adding some popular
+culture to this activity.
+
+
+\end{document}

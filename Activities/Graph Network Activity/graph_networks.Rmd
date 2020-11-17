@@ -1,6 +1,11 @@
 ---
-title: "Graph Networks Activity"
 pdf_document: default
+title: "Graph Networks Activity"
+output:
+  word_document: default
+  pdf_document: default
+  html_document:
+    df_print: paged
 ---
 
 ### Libraries Used
@@ -10,7 +15,6 @@ library(tidyverse)
 library(threejs)
 library(readr)
 library(knitr)
-library(RColorBrewer)
 ```
 
 ### The Data
@@ -211,7 +215,10 @@ plot(friends_graph, rescale = T, layout = l2, main = "'Friends' Network - All Se
 ```
 
 
-
+### Acknowledgements
+Special thanks to Keith McNulty's article "Community Detection in R Using 
+Communitues of Friends Characters" for adding some popular culture to this 
+activity.
 
 
 
