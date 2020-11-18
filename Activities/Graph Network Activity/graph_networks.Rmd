@@ -1,6 +1,8 @@
 ---
-title: "Graph Networks Activity"
 pdf_document: default
+title: "Graph Networks Activity"
+output:
+  pdf_document: default
 ---
 
 ### Libraries Used
@@ -17,8 +19,8 @@ We have provided both a custom data set and an .RDS file with a list
 outlining various cases of dialogue from the tv show 'Friends', outlining instances of speech, the speaker, and the recipient of the speech. 
 ```{r, message=FALSE}
 node_list <- tibble(id = 0:5)
-edge_list <- tibble(root = c(0, 0, 0, 1, 1, 2, 2, 2, 3, 3, 4, 4, 5, 5, 5),
-                    dest = c(1, 2, 4, 2, 5, 0, 1, 5, 2, 4, 2, 3, 1, 2, 4))
+edge_list <- tibble(Root = c(0, 0, 0, 1, 1, 2, 2, 2, 3, 3, 4, 4, 5, 5, 5),
+                    Destination = c(1, 2, 4, 2, 5, 0, 1, 5, 2, 4, 2, 3, 1, 2, 4))
 ```
 
 ```{r, message = FALSE}
@@ -66,27 +68,40 @@ characteristics such as the diameter, which is the largest number of
 connections between any two nodes.
 
 Analysis of the custom data:
-```{r, message = FALSE}
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
 E(graph) # Indicates 15 edges
 V(graph) # Indicates 6 nodes
 get_diameter(graph) # Indicates a diameter of four
 
 ```
 Analysis of the Friends data:
-```{r, message=FALSE}
+```{r message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
 E(friends_graph) # Indicates 2961 edges signifying different instances of speech
 V(friends_graph) # Indicates 650 nodes, signifying 650 different speakers
 get_diameter(friends_graph) # Indicates that the greatest distance between 
 #                             any characters is five degrees of separation
 ```
 In addition to checking these basic network characteristics, certain commands 
-tell you data about specific points. For example, the degree command tells you
-the number of nodes connected to a single node.
+tell you data about specific points. 
 
-For example, degree can be used to tell us that Joey interacted with 348 
+For example, the degree command can be used to tell us that Joey interacted with 348 
 characters:
 ```{r}
 degree(friends_graph, v = 'Joey')
+```
+
+You can also use this data to create visualizations of characters' social 
+patterns. For example, the histogram below shows the number of times that
+Chandler talked to each of his "friends", which, in this case, signifies
+anyone that he spoke to more than fifteen times.
+```{r message=FALSE, warning=FALSE}
+chandlers_friends <- filter(friends_edgelist, from == 'Chandler') %>%
+  filter(weight > 15) %>% arrange(desc(weight))
+
+ggplot(chandlers_friends, aes(x = to, y = weight )) + geom_bar(stat = "identity", fill = "Blue") +
+  ggtitle("Chandler's Friends") + xlab("Friend") + ylab("Times Spoken to") + 
+  scale_fill_brewer(palette = "Blues")
+
 ```
 
 
@@ -119,7 +134,14 @@ of each community so they can be analyzed independently and sorted using dplyr
 commands for analyzing the nodes with the most betweenness, or involvement
 within the network. The resulting list will show each community's member count
 and its most central member.
-```{r, message=FALSE}
+```{r message=FALSE, warning=FALSE, paged.print=TRUE}
+# run louvain with edge weights 
+louvain_partition <- igraph::cluster_louvain(friends_graph, weights = E(friends_graph)$weight) 
+# assign communities to graph 
+friends_graph$community <- louvain_partition$membership 
+# see how many communities there are 
+unique(friends_graph$community) 
+
 communities <- data.frame() 
 for (i in unique(friends_graph$community)) { 
   # create subgraphs for each community 
@@ -141,9 +163,59 @@ knitr::kable(
     dplyr::select(community, n_characters, most_important))
 ```
 
+Since three of these groups are notably smaller and led by insignificant
+characters, we'll create subgraphs of each group and filter them out by
+group size to ensure that only the groups lead by main characters are 
+included.
+```{r message=FALSE, warning=FALSE, paged.print=FALSE}
+top_five <- data.frame() 
+for (i in unique(friends_graph$community)) { 
+  # create subgraphs for each community 
+  subgraph <- induced_subgraph(friends_graph, v = which(friends_graph$community == i)) 
+  # for larger communities 
+  if (igraph::gorder(subgraph) > 20) { 
+    # get degree 
+    degree <- igraph::degree(subgraph) 
+  } 
+}
+```
+
+FINALLY, it is time to visualize the network in a way that is visually pleasing
+and reasonably organized. After adding some colors to represent a node's
+community, scaling the nodes by degree, and adding colored edges to show the
+root of the edge (or speaker of the dialogue), it's time to plot the graphs. 
+Layout one, the spherical layout, is more visually pleasing but layout two
+is clearly preferable as it clusters groups together and bases node placement
+on community involvement and betweenness. 
+```{r}
+# Scaling by degree and coloring by community
+V(friends_graph)$size <- 3 
+V(friends_graph)$frame.color <- "white" 
+V(friends_graph)$color <- friends_graph$community 
+V(friends_graph)$label <- V(friends_graph)$name 
+V(friends_graph)$label.cex <- 1.5 
+# Coloring by speaker
+edge.start <- ends(friends_graph, es = E(friends_graph), names = F)[,1] 
+E(friends_graph)$color <- V(friends_graph)$color[edge.start] 
+E(friends_graph)$arrow.mode <- 0 # only label central characters 
+v_labels <- which(V(friends_graph)$name %in% friends) 
+for (i in 1:length(V(friends_graph))) { 
+  if (!(i %in% v_labels)) { V(friends_graph)$label[i] <- "" } 
+}
+
+l1 <- layout_on_sphere(friends_graph)
+plot(friends_graph, rescale = T, layout = l1, main = "'Friends' Network - All Seasons")
+
+l2 <- layout_with_mds(friends_graph) 
+plot(friends_graph, rescale = T, layout = l2, main = "'Friends' Network - All Seasons")
+
+```
 
 
-
+### Acknowledgements
+Special thanks to Keith McNulty's article "Community Detection in R Using 
+Communitues of Friends Characters" for adding some popular culture to this 
+activity.
 
 
 
