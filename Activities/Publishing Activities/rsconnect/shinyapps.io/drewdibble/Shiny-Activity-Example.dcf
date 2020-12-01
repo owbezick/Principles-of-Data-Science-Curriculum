@@ -1,0 +1,12 @@
+name: Shiny-Activity-Example
+title: Shiny-Activity-Example
+username:
+account: drewdibble
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3334036
+bundleId: 3929764
+url: https://drewdibble.shinyapps.io/Shiny-Activity-Example/
+when: 1606859636.78461
+asMultiple: FALSE
+asStatic: FALSE

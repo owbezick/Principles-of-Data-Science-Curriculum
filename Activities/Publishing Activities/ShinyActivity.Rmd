@@ -1,0 +1,74 @@
+---
+pdf_document: default
+title: "Shiny Activity"
+output: 
+    pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## Create an app
+The goal of this exercise is to create an app that mirrors the second page of the inspiration app you saw at the start of this course. You can see an example app [HERE](https://drewdibble.shinyapps.io/Shiny-Activity-Example/) with full code [HERE](https://github.com/owbezick/Principles-of-Data-Science-Curriculum/blob/master/Activities/Publshing%20Activities/app.R) if you get stuck. Follow the steps below to create and publish your own app. 
+
+##### Server
+1. Read in the census data from the csv file. Make sure your csv file is stored in the same folder as your app. 
+2. Use renderUI and pickerInput to create a picker input for the state selection with an appropriate name and label. Set the choices parameter as ls_states after adding the following chunk to get all of the unique state names:
+```{r, eval = FALSE}
+    ls_states <- census_data %>%
+        select(state) %>%
+        distinct() %>%
+        pull()
+```
+3. Use renderUI and pickerInput to create a picker input for the variable input with an appropriate name and label. Set the choices parameter as the following code chunk:
+```{r, eval = FALSE}
+c("Population" = "popEstimate16", "Unemployment Rate" = "unemployment",
+                          "Median Income" = "medianIncome16", "Percent Voted for Trump" = "prcntGOP16")
+```
+
+4. Add the code chunk below to create a reactive expression for filtering the data.
+```{r, eval = FALSE}
+graph_data <- reactive({
+        req(input$state)
+        subset(census_data, subset = (state == input$state))
+    })
+```
+
+5. Within a renderPlot call, use your code from the mapping activity to create a choropleth visual of the given state. You will need to make the following changes to this code:
+    - Define state_df as below and set data equal to state_df. 
+    - Define choice as below and change fill to get(choice) within the ggplot call.
+    - Replace the gradient call scale_fill_gradient2() with the scale_color_gradient call below. 
+    - Define key_label as below and set it as the fill parameter in your labs() call.  
+    
+```{r, eval = FALSE}
+state_df <- graph_data()
+```
+
+```{r, eval = FALSE}
+choice <- input$variable
+```
+
+```{r, eval = FALSE}
+scale_color_gradient(pretty_breaks(n=5))
+```
+
+```{r, eval = FALSE}
+key_label <- if (choice == "popEstimate16") {"Population Estimate"} 
+                        else if (choice == "unemployment") {"Unemployment Rate"}
+                        else if (choice == "medianIncome16") {"Median Income ($)"}
+                        else {"Percent that Voted for Trump in 2016"}
+```
+
+7. Repeat step 6 to create the nationwide graph, this time keeping census_data as the data parameter.
+
+##### UI
+1. Create a title panel. 
+2. Use fluidRow() and column() to appropriately organize your display. You will need uiOutput() for your pickers and plotOutput() for your maps. Remember that the width of a row is 12. 
+
+
+## Publishing your app
+1. In order to publish your app, you will need to create a shiny.io account. You can sign up [HERE](https://www.shinyapps.io/). 
+2. Once you create an account, follow the three steps listed. 
+3. When you deploy your app, just fill in the path to your app on your computer and click run. Give R Studio a minute and then observe as it opens a link to your app. BAM! You have published your very own shiny app. 
+
+|       Congratulations! In the future, now that your shiny.io account is connected to your computer, you will be able to click the blue 'Publish' button in the top right of R Studio and follow the directions to easily publish your applications. 

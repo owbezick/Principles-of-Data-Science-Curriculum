@@ -1,0 +1,12 @@
+name: Inspiration-App
+title: Inspiration-App
+username:
+account: drewdibble
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3333368
+bundleId: 3929722
+url: https://drewdibble.shinyapps.io/Inspiration-App/
+when: 1606858875.98366
+asMultiple: FALSE
+asStatic: FALSE

@@ -1,0 +1,102 @@
+---
+title: "Testing Graph Net"
+output: html_output
+---
+
+### Libraries Used
+```{r, message = FALSE, warning = FALSE}
+library(igraph)
+library(tidyverse)
+library(threejs)
+library(readr)
+library(knitr)
+```
+
+```{r, message = FALSE}
+friends_edgelist <- readRDS("edgelist.RDS") 
+```
+
+```{r, message = FALSE}
+friends <- c("Phoebe", "Monica", "Rachel", "Joey", "Ross", "Chandler") 
+edgelist_without <- friends_edgelist %>% 
+  dplyr::filter(!(from %in% friends & to %in% friends))
+```
+
+```{r, message = FALSE}
+edgelist_matrix <- as.matrix(edgelist_without[ ,c("from", "to")]) 
+friends_graph <- igraph::graph_from_edgelist(edgelist_matrix, directed = FALSE) %>% 
+  igraph::set.edge.attribute("weight", value = edgelist_without$weight)
+```
+
+```{r message=FALSE, warning=FALSE}
+chandlers_friends <- filter(friends_edgelist, from == 'Monica') %>%
+  filter(weight > 15) %>% arrange(desc(weight))
+
+ggplot(chandlers_friends, aes(x = to, y = weight )) + geom_bar(stat = "identity", fill = "Blue") +
+  ggtitle("Ross's Friends") + xlab("Friend") + ylab("Times Spoken to") + 
+  scale_fill_brewer(palette = "Blues")
+
+```
+
+```{r message=FALSE, warning=FALSE, paged.print=TRUE}
+# run louvain with edge weights 
+louvain_partition <- igraph::cluster_louvain(friends_graph, weights = E(friends_graph)$weight) 
+# assign communities to graph 
+friends_graph$community <- louvain_partition$membership 
+# see how many communities there are 
+unique(friends_graph$community) 
+
+communities <- data.frame() 
+for (i in unique(friends_graph$community)) { 
+  # create subgraphs for each community 
+  subgraph <- induced_subgraph(friends_graph, v = which(friends_graph$community == i)) 
+  # get size of each subgraph 
+  size <- igraph::gorder(subgraph) 
+  # get betweenness centrality 
+  btwn <- igraph::betweenness(subgraph) 
+  communities <- communities %>% 
+    dplyr::bind_rows(data.frame(
+      community = i, 
+      n_characters = size, 
+      most_important = names(which(btwn == max(btwn))) 
+    ) 
+    ) 
+} 
+
+```
+
+```{r message=FALSE, warning=FALSE, paged.print=FALSE}
+top_five <- data.frame() 
+for (i in unique(friends_graph$community)) { 
+  # create subgraphs for each community 
+  subgraph <- induced_subgraph(friends_graph, v = which(friends_graph$community == i)) 
+  # for larger communities 
+  if (igraph::gorder(subgraph) > 20) { 
+    # get degree 
+    degree <- igraph::degree(subgraph) 
+  } 
+}
+```
+
+
+
+```{r}
+# Scaling by degree and coloring by community
+V(friends_graph)$size <- 3 
+V(friends_graph)$frame.color <- "white" 
+V(friends_graph)$color <- friends_graph$community 
+V(friends_graph)$label <- V(friends_graph)$name 
+V(friends_graph)$label.cex <- 1.5 
+# Coloring by speaker
+edge.start <- ends(friends_graph, es = E(friends_graph), names = F)[,1] 
+E(friends_graph)$color <- V(friends_graph)$color[edge.start] 
+E(friends_graph)$arrow.mode <- 0 # only label central characters 
+v_labels <- which(V(friends_graph)$name %in% friends) 
+for (i in 1:length(V(friends_graph))) { 
+  if (!(i %in% v_labels)) { V(friends_graph)$label[i] <- "" } 
+}
+
+l2 <- layout_with_mds(friends_graph)
+plot(friends_graph, rescale = T, layout = l2, main = "'Friends' Network - All Seasons")
+
+```
