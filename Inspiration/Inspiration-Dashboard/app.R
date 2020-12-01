@@ -18,6 +18,7 @@ library(viridis)
 library(igraph)
 library(threejs)
 library(knitr)
+library(mapproj)
 
 ui <- dashboardPage(
     # Application Title ----
@@ -167,7 +168,7 @@ server <- function(input, output) {
                         else if (choice == "unemployment") {"Unemployment Rate"}
                         else if (choice == "medianIncome16") {"Median Income ($)"}
                         else {"Percent that Voted for Trump in 2016"}
-        
+         
         ggplot(
             data = state_df
             , aes(
