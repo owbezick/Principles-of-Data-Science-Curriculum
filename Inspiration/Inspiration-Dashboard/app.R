@@ -159,7 +159,6 @@ server <- function(input, output) {
         subset(census_data, subset = (state == input$state))
     })
     
-    #to do: fix fill for state ----
     output$state_graph <- renderPlot({
         state_df <- graph_data()
         choice <- input$variable
@@ -169,7 +168,7 @@ server <- function(input, output) {
                 x = long
                 , y = lat
                 , group = group
-                , fill = state_df$choice
+                , fill = get(choice)
             )
         ) +
             geom_polygon(
@@ -182,18 +181,20 @@ server <- function(input, output) {
                 , lat1 = 45
             ) +
             scale_color_gradient(pretty_breaks(n=5)) + 
-            labs(fill = "Unemployment") 
+            labs(fill = "Selected Variable") 
     })
     
     #to do: fix fill for state ----
     output$country_graph <- renderPlot({
+        req(input$variable)
+        choice <- input$variable
         ggplot(
             data = census_data
             , aes(
                 x = long
                 , y = lat
                 , group = group
-                , fill = unemployment
+                , fill = get(choice)
             )
         ) +
             geom_polygon(
@@ -206,7 +207,7 @@ server <- function(input, output) {
                 , lat1 = 45
             ) +
             scale_color_gradient(pretty_breaks(n=5)) + 
-            labs(fill = "Unemployment") 
+            labs(fill = "Selected Variable") 
     })
     
     
