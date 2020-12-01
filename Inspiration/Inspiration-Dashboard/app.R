@@ -150,7 +150,8 @@ server <- function(input, output) {
         pickerInput(
             "variable"
             , label = "Select a variable"
-            , choices = colnames(census_data)
+            , choices = c("Population" = "popEstimate16", "Unemployment Rate" = "unemployment",
+                          "Median Income" = "medianIncome16", "Percent Voted for Trump" = "prcntGOP16")
         )
     })
  
@@ -162,6 +163,11 @@ server <- function(input, output) {
     output$state_graph <- renderPlot({
         state_df <- graph_data()
         choice <- input$variable
+        key_label <- if (choice == "popEstimate16") {"Population Estimate"} 
+                        else if (choice == "unemployment") {"Unemployment Rate"}
+                        else if (choice == "medianIncome16") {"Median Income ($)"}
+                        else {"Percent that Voted for Trump in 2016"}
+        
         ggplot(
             data = state_df
             , aes(
@@ -181,13 +187,17 @@ server <- function(input, output) {
                 , lat1 = 45
             ) +
             scale_color_gradient(pretty_breaks(n=5)) + 
-            labs(fill = "Selected Variable") 
+            labs(fill = key_label) 
     })
     
     #to do: fix fill for state ----
     output$country_graph <- renderPlot({
         req(input$variable)
         choice <- input$variable
+        key_label <- if (choice == "popEstimate16") {"Population Estimate"} 
+                        else if (choice == "unemployment") {"Unemployment Rate"}
+                        else if (choice == "medianIncome16") {"Median Income ($)"}
+                        else {"Percent that Voted for Trump in 2016"}
         ggplot(
             data = census_data
             , aes(
@@ -207,7 +217,7 @@ server <- function(input, output) {
                 , lat1 = 45
             ) +
             scale_color_gradient(pretty_breaks(n=5)) + 
-            labs(fill = "Selected Variable") 
+            labs(fill = key_label) 
     })
     
     
