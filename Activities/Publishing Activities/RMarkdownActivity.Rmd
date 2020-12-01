@@ -1,0 +1,30 @@
+---
+pdf_document: default
+title: "R Markdown Activity"
+output: 
+    pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Create a Report
+
+|       Now, it's time to create and publish a report of your own. In this activity, you will use your code from the data wrangling activity to create a report through R Markdown like the example [HERE](http://rpubs.com/drdibble/694529). Just follow the steps below to create your own!
+
+### Steps
+1. Insert a code chunks with the necessary library imports. Set message equal to false in the code chunk to hide the results of these imports.
+2. Insert another code chunk to read the csv and create the resulting data frame. Again, set message equal to false to hide the results. 
+3. Insert one last code chunk with the code that created your visual from part 1 of the independent activities section of the Map Activity. Set echo to false in order to hide this code and only display your visual. 
+4. Finally, comment on your visual. 
+
+### Publishing Your Report
+|       Now that you have completed your report, it's time to show it to the world! Don't worry, RStudio and RPubs make this incredibly easy. Just follow these steps:
+1. Make sure that your file output is html. 
+2. Click 'Knit' to view the preview. 
+3. On the preview screen, click 'Publish' in the top right and select 'RPubs' and 'Publish.'
+4. Follow the directions to create an RPubs account. 
+5. Give your report a title on RPubs and publish it. 
+
+Congrats! You have officially published your very own report. 

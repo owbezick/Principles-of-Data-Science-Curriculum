@@ -1,0 +1,79 @@
+---
+title: "R Markdown Activity Example"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Libraries Used
+```{r, message = FALSE, warning = FALSE}
+library(tidyverse)
+library(scales)
+```
+
+### The Data
+```{r, message = FALSE}
+census_data <- read_csv("census_data.csv")
+```
+
+```{r, echo = FALSE}
+ggplot(
+  data = census_data
+  , aes(
+    x = long
+    , y = lat
+    , group = group
+    , fill = unemployment
+  )
+) +
+  geom_polygon(
+    color = "gray90"
+    , size = 0.02
+  ) + 
+  coord_map(
+    projection = "albers"
+    , lat0 = 39
+    , lat1 = 45
+  ) +
+  scale_color_gradient(
+    pretty_breaks(n=5)
+  ) + labs(
+    title = "Unemployment"
+    , fill = "Unemployment Rate"
+  ) 
+```
+
+
+```{r, echo = FALSE}
+tennessee <- census_data %>% filter(state == "Tennessee")
+
+ggplot(
+  data = tennessee
+  , aes(
+    x = long
+    , y = lat
+    , group = group
+    , fill = unemployment
+  )
+) +
+  geom_polygon(
+    color = "gray90"
+    , size = 0.05
+  ) + 
+  coord_map(
+    projection = "albers"
+    , lat0 = 39
+    , lat1 = 45
+  ) +
+  scale_color_gradient(
+    pretty_breaks(n=5)
+  ) + labs(
+    title = "Unemployment"
+    , fill = "Unemployment Rate"
+  ) 
+```
+
+## Comments
+I chose to investigate unemployment, both nationwide and in my home state of Tennessee. Nationwide, it appears that unemployment peaks in southern California and Alaska. In Tennessee, it appears that unemployment is higher in rural Tennessee than it is in urban areas like Nashville, Memphis, and Knoxville. In fact, those three cities seem to have some of the lowest unemployment rates in the state. This makes sense since there should be more job opportunities in the major cities. 
